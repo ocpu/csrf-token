@@ -1,6 +1,7 @@
 # CSRF Token
 [![CircleCI](https://img.shields.io/circleci/project/github/ocpu/csrf-token.svg?style=flat-square)](https://circleci.com/gh/ocpu/csrf-token)
 [![Codecov](https://img.shields.io/codecov/c/github/ocpu/csrf-token.svg?style=flat-square)](https://codecov.io/gh/ocpu/csrf-token)
+[![npm](https://img.shields.io/npm/v/csrf-token.svg?style=flat-square)](https://www.npmjs.com/package/csrf-token)
 
 Create and verify csrf tokens
 
@@ -50,7 +51,7 @@ Verify CSRF token asynchronously.
 ```js
 csrf.verify(secret, token, (matches) => {
     if (matches) console.log('They match!')
-    else console.log('They don\'t match?')
+    else console.log('They don\'t they match?')
 })
 csrf.verify(secret, token).then((matches) => {
     if (matches) console.log('Yes!')
