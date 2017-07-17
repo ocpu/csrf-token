@@ -4,7 +4,7 @@
   "description": "Create and verify csrf tokens",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --reporter=text mocha test/*.js"
+    "test": "nyc --reporter=lcov mocha test/*.js"
   },
   "repository": {
     "type": "git",
