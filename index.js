@@ -1,4 +1,6 @@
 const assert = require('assert')
+const createError = require('http-errors')
+const { serialize: serializeCookie, parse: parseCookie } = require('cookie')
 
 const urlSafeHash = str => require('crypto')
         .createHash('sha1')
@@ -12,6 +14,9 @@ const chars = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 
                 0,   1,   2,   3,   4,   5,   6,   7,   8,   9]
 const createSalt = length => new Array(length).fill(void 0, 0, length).map(() => chars[(Math.random() * chars.length) | 0]).join('')
 const createToken = (secret, salt) => `${salt}-${urlSafeHash(`${salt}-${secret}`)}`
+const getExpressValue = req => (req.body && req.body['_csrf-token']) || (req.query && req.query['_csrf-token'])
+    (req.header['csrf-token']) || (req.headers['x-csrf-token']) ||
+    (req.header['xsrf-token']) || (req.headers['x-xsrf-token'])
 
 module.exports = {
     /**
@@ -77,5 +82,29 @@ module.exports = {
         const salt = token.substring(0, token.indexOf('-'))
         const expected = createToken(secret, salt)
         return expected === token
+    },
+    /**
+     * @requires body-parser If you don't want to do your own checks.
+     * @param {*} secret 
+     * @param {*} options 
+     */
+    express(secret, options) {
+        options = options || {}
+        options.saltLength = options.saltLength || 8
+        options.excludeMethods = options.excludeMethods || ['GET', 'HEAD', 'OPTIONS']
+        const cookie = Object.assign({ key: '_csrf-token', path: '/' }, Object(options.cookie))
+        return (req, res, next) => {
+            req.csrfToken = () => {
+                const token = this.createSync(secret, options.saltLength)
+                res.setHeader('Set-Cookie', serializeCookie(cookie.key, token, cookie))
+            }
+            if (!!~options.excludeMethods.indexOf(req.method))
+                next()
+            const secret = getExpressValue(req)
+            this.verify(secret, secret, matches => {
+                if (matches) next()
+                else next(createError(403, 'Invalid csrf token'))
+            })
+        }
     }
 }
