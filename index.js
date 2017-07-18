@@ -15,12 +15,12 @@ const createToken = (secret, salt) => `${salt}-${urlSafeHash(`${salt}-${secret}`
 
 module.exports = {
     /**
-     * Create a csrf token asynchronously.
+     * Create a CSRF token asynchronously.
      * 
-     * @param {string} secret The secret to encrypt
-     * @param {number} [saltLength=8]
-     * @param {function(string)} [callback] If not specified returns a promise with the result
-     * @returns {(void|Promise<string>)} 
+     * @param {string} secret The secret to encrypt.
+     * @param {number} [saltLength=8] The length of the generated salt.
+     * @param {function(string)} [callback] A function with the generated token.
+     * @returns {(void|Promise<string>)} Returns void if callback is specified otherwise returns a promise with the generated token.
      */
     create(secret, saltLength = 8, callback) {
         assert(typeof secret === 'string', 'Secret must be a string')
@@ -31,11 +31,11 @@ module.exports = {
         else return new Promise(resolve =>    resolve(createToken(secret, createSalt(saltLength))))
     },
     /**
-     * Create a csrf token synchronously.
+     * Create a CSRF token synchronously.
      * 
-     * @param {string} secret The secret to encrypt
-     * @param {number} [saltLength=8]
-     * @returns {string}
+     * @param {string} secret The secret to encrypt.
+     * @param {number} [saltLength=8] The length of the generated salt.
+     * @returns {string} Returns the generated token.
      */
     createSync(secret, saltLength = 8) {
         assert(typeof secret === 'string', 'Secret must be a string')
@@ -45,12 +45,12 @@ module.exports = {
         return createToken(secret, createSalt(saltLength))
     },
     /**
-     * Varify if the token and secret match asynchronously.
+     * Verify CSRF token asynchronously.
      * 
-     * @param {string} secret The secret that was supposadly encrypted
-     * @param {string} token The token that hopefully is the secret in a encrypted form
-     * @param {function(boolean)} [callback] If not specified then this returns a promise
-     * @returns {(void|Promise<boolean>)}
+     * @param {string} secret The secret that was supposadly encrypted.
+     * @param {string} token The token that hopefully is the secret in a encrypted form.
+     * @param {function(boolean)} [callback] A function with the result of the verification.
+     * @returns {(void|Promise<boolean>)} Returns void if callback is specified otherwise returns a promise with the result of the verification.
      */
     verify(secret, token, callback) {
         if (!~token.indexOf('-')) return false
@@ -66,11 +66,11 @@ module.exports = {
         })
     },
     /**
-     * Varify if the token and secret match synchronously.
+     * Verify CSRF token synchronously.
      * 
-     * @param {string} secret The secret that was supposadly encrypted
-     * @param {string} token The token that hopefully is the secret in a encrypted form
-     * @returns {boolean}
+     * @param {string} secret The secret that was supposadly encrypted.
+     * @param {string} token The token that hopefully is the secret in a encrypted form.
+     * @returns {boolean} Returns a boolean if they match or not.
      */
     verifySync(secret, token) {
         if (!~token.indexOf('-')) return false

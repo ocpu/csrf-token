@@ -29,7 +29,6 @@ csrf.create('I want to make my app safer').then((token) => {
 ### createSync(secret, [saltLength])
 - `secret` \<String> The secret to encrypt.
 - `saltLength` \<Number> The length of the generated salt. __Default:__ `8`
-- `callback` \<Function> A function with the generated token.
 
 Returns the generated token.
 
