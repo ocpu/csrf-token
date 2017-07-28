@@ -14,7 +14,7 @@ declare var csrf: {
      * @param saltLength The length of the generated salt.
      * @param callback A function with the generated token.
      */
-    create(secret: string, saltLength?: number = 8, callback: (token: string) => void): void
+    create(secret: string, saltLength?: number = 8, callback: (error: Error, token: string) => void): void
     /**
      * Create a CSRF token synchronously.
      * 
@@ -47,6 +47,25 @@ declare var csrf: {
      * @returns Returns a boolean if they match or not.
      */
     verifySync(secret: string, token: string): boolean
+    /**
+     * A express middleware.
+     * @param secret The secret to encrypt.
+     * @param options Middleware options.
+     * @param options.cookie The cookie that gets created.
+     * @param options.saltLength The length of the generated salt.
+     * @returns The express middleware function
+     */
+    express(secret: string, options?: { cookie?: { key: string, path: string }, saltLength?: number }): () => void
+}
+
+interface Response {
+    /**
+     * The routes that has the express middleware has this method.
+     * 
+     * Basicly creates a csrf token.
+     * @returns The csrf token
+     */
+    csrfToken(): string
 }
 
 export = csrf

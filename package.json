@@ -3,33 +3,22 @@
   "version": "1.0.1",
   "description": "Create and verify csrf tokens",
   "main": "index.js",
-  "scripts": {
-    "test": "nyc --reporter=lcov mocha test/*.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ocpu/csrf-token.git"
-  },
+  "author": "Martin Hövre",
+  "license": "MIT",
   "keywords": [
     "csrf",
     "token",
     "tokens"
   ],
-  "author": "Martin Hövre",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ocpu/csrf-token/issues"
-  },
+  "repository": "https://github.com/ocpu/csrf-token.git",
+  "bugs": "https://github.com/ocpu/csrf-token/issues",
   "homepage": "https://github.com/ocpu/csrf-token#readme",
   "devDependencies": {
     "expect.js": "0.3.1",
-    "express": "^4.15.3",
     "mocha": "^3.4.2",
-    "nyc": "^11.0.3",
-    "body-parser": "1.17.2"
+    "nyc": "^11.0.3"
   },
-  "dependencies": {
-    "cookie": "^0.3.1",
-    "http-errors": "^1.6.1"
+  "scripts": {
+    "test": "nyc --reporter=lcov mocha test/*.js"
   }
 }

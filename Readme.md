@@ -21,7 +21,8 @@ Create a CSRF token asynchronously.
 csrf.create('I like CSRF it makes me feel whole', 8, (token) => {
     console.log(`Look at my fancy CSRF token '${token}'`)
 })
-csrf.create('I want to make my app safer').then((token) => {
+csrf.create('I want to make my app safer').then((err, token) => {
+    if (err) console.error(err)
     console.log(`Hey I got this from a promise '${token}'`)
 })
 ```
