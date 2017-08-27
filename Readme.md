@@ -1,4 +1,6 @@
 # CSRF Token
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/ocpu/csrf-token.svg)](https://greenkeeper.io/)
 [![CircleCI](https://img.shields.io/circleci/project/github/ocpu/csrf-token.svg?style=flat-square)](https://circleci.com/gh/ocpu/csrf-token)
 [![Codecov](https://img.shields.io/codecov/c/github/ocpu/csrf-token.svg?style=flat-square)](https://codecov.io/gh/ocpu/csrf-token)
 [![npm](https://img.shields.io/npm/v/csrf-token.svg?style=flat-square)](https://www.npmjs.com/package/csrf-token)
