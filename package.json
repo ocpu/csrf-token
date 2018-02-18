@@ -14,11 +14,13 @@
   "bugs": "https://github.com/ocpu/csrf-token/issues",
   "homepage": "https://github.com/ocpu/csrf-token#readme",
   "devDependencies": {
-    "expect.js": "0.3.1",
-    "mocha": "^3.4.2",
-    "nyc": "^11.0.3"
+    "eslint": "^4.18.0",
+    "jest": "^22.3.0"
   },
   "scripts": {
-    "test": "nyc --reporter=lcov mocha test/*.js"
+    "test": "npm run test_jest && npm run test_eslint",
+    "test_jest": "jest test/*.js --coverage",
+    "test_eslint": "eslint index.js",
+    "test_watch": "jest --watch test/*.js"
   }
 }

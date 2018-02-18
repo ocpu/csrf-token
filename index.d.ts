@@ -1,3 +1,10 @@
+type method = 
+    'get' | 'post' |
+    'put' | 'delete' |
+    'options' | 'head' |
+    'connect' | 'trace' |
+    'patch'
+
 declare var csrf: {
     /**
      * Create a CSRF token asynchronously.
@@ -52,10 +59,19 @@ declare var csrf: {
      * @param secret The secret to encrypt.
      * @param options Middleware options.
      * @param options.cookie The cookie that gets created.
+     * @param options.cookie.key The cookie that gets created.
+     * @param options.cookie.path The cookie that gets created.
      * @param options.saltLength The length of the generated salt.
      * @returns The express middleware function
      */
-    express(secret: string, options?: { cookie?: { key: string, path: string }, saltLength?: number }): () => void
+    // express(secret: string, options?: {
+    //     cookie?: {
+    //         key: string,
+    //         path: string
+    //     },
+    //     saltLength?: number,
+    //     ignores?: method[]
+    // }): () => void
 }
 
 interface Response {
