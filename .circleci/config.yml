@@ -13,7 +13,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
       - run: npm i
-      - run: npm i has-flag glob
+      - run: npm i has-flag glob diff
       - save_cache:
           paths:
             - node_modules
