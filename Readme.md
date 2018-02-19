@@ -10,9 +10,9 @@ Create and verify csrf tokens
 <details>
   <summary>TOC</summary>
   <ul>
-    <li><a href="#createsecret-saltlength-callback">create(secret [, saltLength [, callback]])</a></li>
+    <li><a href="#createsecret--saltlength--callback">create(secret [, saltLength [, callback]])</a></li>
     <li><a href="#createsyncsecret-saltlength">createSync(secret, [saltLength])</a></li>
-    <li><a href="#verifysecret-token-callback">verify(secret, token [, callback])</a></li>
+    <li><a href="#verifysecret-token--callback">verify(secret, token [, callback])</a></li>
     <li><a href="#verifysyncsecret-token">verifySync(secret, token)</a></li>
   </ul>
 </details>
