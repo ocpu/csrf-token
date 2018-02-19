@@ -23,6 +23,13 @@ declare var csrf: {
      */
     create(secret: string, saltLength?: number = 8, callback: (error: Error, token: string) => void): void
     /**
+     * Create a CSRF token asynchronously.
+     * 
+     * @param secret The secret to encrypt.
+     * @param callback A function with the generated token.
+     */
+    create(secret: string, callback: (error: Error, token: string) => void): void
+    /**
      * Create a CSRF token synchronously.
      * 
      * @param secret The secret to encrypt.

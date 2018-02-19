@@ -30,7 +30,8 @@ module.exports = {
      * @returns {(void|Promise<string>)} Returns void if callback is specified otherwise returns a promise with the generated token.
      */
   create(secret, saltLength=8, callback) {
-    if (callback) process.nextTick(() => {
+    if (typeof callback === 'function' || typeof saltLength === 'function') process.nextTick(() => {
+      if (typeof saltLength === 'function') { callback = saltLength; saltLength = 8 }
       try { callback(void 0, this.createSync(secret, saltLength)) } catch (e) { callback(e) }
     }); else return new Promise((resolve, reject) => {
       try { resolve(this.createSync(secret, saltLength)) } catch (e) { reject(e) }

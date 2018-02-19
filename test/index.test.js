@@ -73,21 +73,18 @@ describe('Fails to create a token', () => {
         done()
       })
     })
-    it('because saltLength is not a number', done => {
+    it('because saltLength is not a number and not a function', done => {
       csrf.create(secret, '', err => {
         expect(err.message).toEqual('Salt length must be a number')
         csrf.create(secret, true, err => {
           expect(err.message).toEqual('Salt length must be a number')
           csrf.create(secret, false, err => {
             expect(err.message).toEqual('Salt length must be a number')
-            csrf.create(secret, () => {}, err => {
+            csrf.create(secret, {}, err => {
               expect(err.message).toEqual('Salt length must be a number')
-              csrf.create(secret, {}, err => {
+              csrf.create(secret, [], err => {
                 expect(err.message).toEqual('Salt length must be a number')
-                csrf.create(secret, [], err => {
-                  expect(err.message).toEqual('Salt length must be a number')
-                  done()
-                })
+                done()
               })
             })
           })
@@ -103,27 +100,21 @@ describe('Fails to create a token', () => {
   })
   describe('asynchronously with promise', () => {
     it('because secret is not a string', () => {
-      return Promise.all([
-        csrf.create(0).catch(err => expect(err.message).toEqual('Secret must be a string')),
-        csrf.create(true).catch(err => expect(err.message).toEqual('Secret must be a string')),
-        csrf.create(false).catch(err => expect(err.message).toEqual('Secret must be a string')),
-        csrf.create(() => {}).catch(err => expect(err.message).toEqual('Secret must be a string')),
-        csrf.create({}).catch(err => expect(err.message).toEqual('Secret must be a string')),
-        csrf.create([]).catch(err => expect(err.message).toEqual('Secret must be a string'))
-      ])
+      expect(csrf.create(0)).rejects.toThrowError('Secret must be a string')
+      expect(csrf.create(true)).rejects.toThrowError('Secret must be a string')
+      expect(csrf.create(false)).rejects.toThrowError('Secret must be a string')
+      expect(csrf.create({})).rejects.toThrowError('Secret must be a string')
+      expect(csrf.create([])).rejects.toThrowError('Secret must be a string')
     })
     it('because secret is a string with nothing in it', () => {
       return csrf.create('').catch(err => expect(err.message).toEqual('Why do you hate secrets? (the secret length is 0)'))
     })
     it('because saltLength is not a number', () => {
-      return Promise.all([
-        csrf.create(secret, '').catch(err => expect(err.message).toEqual('Salt length must be a number')),
-        csrf.create(secret, true).catch(err => expect(err.message).toEqual('Salt length must be a number')),
-        csrf.create(secret, false).catch(err => expect(err.message).toEqual('Salt length must be a number')),
-        csrf.create(secret, () => {}).catch(err => expect(err.message).toEqual('Salt length must be a number')),
-        csrf.create(secret, {}).catch(err => expect(err.message).toEqual('Salt length must be a number')),
-        csrf.create(secret, []).catch(err => expect(err.message).toEqual('Salt length must be a number'))
-      ])
+      expect(csrf.create(secret, '')).rejects.toThrowError('Salt length must be a number')
+      expect(csrf.create(secret, true)).rejects.toThrowError('Salt length must be a number')
+      expect(csrf.create(secret, false)).rejects.toThrowError('Salt length must be a number')
+      expect(csrf.create(secret, {})).rejects.toThrowError('Salt length must be a number')
+      expect(csrf.create(secret, [])).rejects.toThrowError('Salt length must be a number')
     })
     it('because saltLength is 0', () => {
       return csrf.create(secret, 0).catch(err => expect(err.message).toEqual('Now I am really salty! (salt length is 0)'))
@@ -152,7 +143,7 @@ describe('Verifies a token', () => {
       expect(matches).toBeFalsy()
       done()
     })
-  })
+  })  
   it('asynchronously with a promise', () =>
     csrf.verify(secret, token).then(matches => {
       expect(matches).toBeTruthy()
@@ -163,4 +154,13 @@ describe('Verifies a token', () => {
       expect(matches).toBeFalsy()
     })
   )
+})
+it('asynchronously verifies using a callback as second argument', done => {
+  csrf.create(secret, (err, token) => {
+    expect(err).toBeUndefined()
+    csrf.verify(secret, token, matches => {
+      expect(matches).toBeTruthy()
+      done()
+    })
+  })
 })
