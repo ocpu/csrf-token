@@ -13,7 +13,7 @@ declare var csrf: {
      * @param saltLength The length of the generated salt.
      * @returns Returns a promise with the generated token.
      */
-    create(secret: string, saltLength?: number = 8): Promise<string>
+    create(secret: string, saltLength?: number): Promise<string>
     /**
      * Create a CSRF token asynchronously.
      * 
@@ -21,7 +21,7 @@ declare var csrf: {
      * @param saltLength The length of the generated salt.
      * @param callback A function with the generated token.
      */
-    create(secret: string, saltLength?: number = 8, callback: (error: Error, token: string) => void): void
+    create(secret: string, saltLength: number, callback: (error: Error, token: string) => void): void
     /**
      * Create a CSRF token asynchronously.
      * 
@@ -36,7 +36,7 @@ declare var csrf: {
      * @param saltLength The length of the generated salt.
      * @returns Returns the generated token.
      */
-    createSync(secret: string, saltLength?: number = 8): string
+    createSync(secret: string, saltLength?: number): string
     /**
      * Verify CSRF token asynchronously.
      * 
@@ -61,38 +61,10 @@ declare var csrf: {
      * @returns Returns a boolean if they match or not.
      */
     verifySync(secret: string, token: string): boolean
-    /**
-     * A express middleware.
-     * @param secret The secret to encrypt.
-     * @param options Middleware options.
-     * @param options.cookie The cookie that gets created.
-     * @param options.cookie.key The cookie that gets created.
-     * @param options.cookie.path The cookie that gets created.
-     * @param options.saltLength The length of the generated salt.
-     * @returns The express middleware function
-     */
-    // express(secret: string, options?: {
-    //     cookie?: {
-    //         key: string,
-    //         path: string
-    //     },
-    //     saltLength?: number,
-    //     ignores?: method[]
-    // }): () => void
-}
-
-interface Response {
-    /**
-     * The routes that has the express middleware has this method.
-     * 
-     * Basicly creates a csrf token.
-     * @returns The csrf token
-     */
-    csrfToken(): string
 }
 
 export = csrf
 
-module "csrf-token" {
+declare module "csrf-token" {
     export = csrf
 }
