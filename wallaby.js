@@ -1,16 +1,14 @@
 /* eslint-disable */
 
-module.exports = function () {
-  return {
-    files: ['./index.js'],
+module.exports = () => ({
+  files: ['./index.js'],
 
-    tests: ['./test/index.test.js'],
+  tests: ['./test/index.test.js'],
 
-    env: {
-      type: 'node',
-      runner: 'node'
-    },
+  env: {
+    type: 'node',
+    runner: 'node'
+  },
 
-    testFramework: 'jest'
-  };
-};
+  testFramework: 'jest'
+})
